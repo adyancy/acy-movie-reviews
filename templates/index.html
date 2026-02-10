@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page">
+
+  {% if session.get('id') %}
+    <h2 class="page-title">Welcome back <span class="muted">[{{ session.get('username') }}]</span>, browse recent movie reviews below.</h2>
+  {% else %}
+    <h2 class="page-title">Welcome, browse recent movie reviews below. <span class="muted">Log in to review.</span></h2>
+  {% endif %}
+
+  <section class="poster-grid">
+    {% for review in reviews %}
+      <article class="poster-card">
+        <div class="poster-frame">
+          {% if review['poster_filename'] %}
+            <img class="poster-img"
+                 src="{{ url_for('static', filename='uploads/' + review['poster_filename']) }}"
+                 alt="Poster for {{ review['movie_title'] }}">
+          {% else %}
+            <img class="poster-img"
+                 src="{{ url_for('static', filename='css/icons/images/placeholder.png') }}"
+                 alt="Poster placeholder">
+          {% endif %}
+        </div>
+
+        <div class="mini-meta">
+          <span class="mini-user">[{{ review['username'] }}]</span>
+          <span class="mini-date">{{ review['review_date'] }}</span>
+        </div>
+
+        <div class="stars-row" aria-label="Rating: {{ review['rating'] }} out of 5">
+          {% for i in range(1,6) %}
+            {% if i <= review['rating'] %}
+              <span class="star filled">★</span>
+            {% else %}
+              <span class="star">★</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+
+        <div class="movie-name">{{ review['movie_title'] }}</div>
+
+        <button type="button" class="review-toggle">
+          ▼ Read review
+        </button>
+        
+        <div class="review-text">
+          {{ review['review_text'] }}
+        </div>
+               
+
+
+
+      </article>
+    {% endfor %}
+  </section>
+
+  
+</div>
+
+{% endblock %}

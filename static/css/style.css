@@ -1,0 +1,456 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap");
+
+/* resets the website */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* the literal darker gray bar at the top where the buttons sit */
+.topbar{
+  background:#5b5b5b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding: 22px 28px;
+  border-bottom: 4px solid #575757;
+}
+
+/* the spacing of the "ACY REVIEWS" text */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* ACY REVIEWS logo settings */
+.brand-logo{
+  width:56px;                  /* bigger logo */
+  height:56px;
+  border-radius:14px;
+  background:#222;
+  object-fit:cover;
+}
+
+/* "ACY REVIEWS" text settings */
+.brand-name{
+  font-size:44px;              /* bigger title */
+  font-weight:900;
+  letter-spacing:1px;
+  color: #feb10a;
+  text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+}
+
+/* puts the buttons side by side */
+.topnav{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+/* navigation button settings (home/login/signup/logout buttons) */
+.navbtn{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#feb10a;
+  color:#5d2819;
+  text-decoration:none;
+  font-weight:900;
+  font-size:22px;
+  padding:16px 22px;
+  border-radius:14px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.25);
+}
+
+/* makes navigation buttons shaded when hovered over */
+.navbtn:hover{ filter: brightness(1.02);
+  opacity: 0.9;
+}
+
+/* size settings for navigation icons*/
+.nav-icon{
+  width:26px;
+  height:26px;
+  object-fit: contain;
+}
+
+/* same as other navigation icons but green */
+.navbtn-green{
+  background:#62c370;
+  color: #027f3a
+}
+
+/* settings for the rounded rectangle that the texts sit on */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#feb10a;
+  color:#1c1c1c;
+  font-weight:900;
+  padding:10px 14px;
+  border-radius:10px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.25);
+}
+
+/* movie title text settings */
+.movie-title{
+  font-size: 1.05rem;
+  line-height: 1.25;
+  margin: 0;
+  color: #ffffff;
+}
+
+/* review text settings */
+.review-text{
+  margin-top: 10px;
+  color: rgba(229,231,235,0.9);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* settings for the rating stars of the reviews */
+.stars{
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
+
+/* settings for the unrated rating stars of the reviews (used if something is less than 5 stars) */
+.star{
+  color:#7a5a00;
+  opacity:0.4;
+  font-size: 22px;
+}
+
+
+/* background of the whole site */ 
+body{
+  background:#686868;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  margin:0;
+  color:#111;
+}
+
+/* invisible margin on sides of the website so everything is centred */
+main{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 18px 22px 40px;
+}
+
+/* slight space between bar and reviews */
+.page{ padding-top: 14px; }
+
+/* slight space between 'welcome back' text and reviews */
+.page-title{
+  margin: 10px 0 18px;
+  font-size: 24px;
+  font-weight: 900;
+  color:#111;
+}
+
+.muted{ opacity:0.6; }
+
+/* settings of the grid shape of the cards (posters and reviews) */
+.poster-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+/* settings for each individual card */
+.poster-card{
+  background: transparent;
+}
+
+/* black rounded frame around the movie posters with drop shadow */
+.poster-frame{
+  width:100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
+  overflow:hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  border: 4px solid rgba(0,0,0,0.08);
+  background:#222;
+}
+
+/* sets the size of the movie posters */
+.poster-img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+/* hidden text settings */
+.mini-meta{
+  margin-top: 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  font-size: 13px;
+  font-weight: 700;
+  color:#444;
+}
+
+/* settings of the user text (name of the users under the reviews) */
+.mini-user{
+  background:#6b6b6b;
+  color:#fff;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* settings of the date text (the dates under the reviews) */
+.mini-date{
+  background:#6b6b6b;
+  color:#fff;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* settings of the stars raw (row of rating stars under the reviews) */
+.stars-row{
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+ /* settings of filled star (fully yellow star, not unfilled star. indicates it is selected.) */
+.star.filled{
+  color:#ffb000;
+  opacity:1;
+}
+
+/* settings of the movie name text (the movie name under the reviews) */
+.movie-name{
+  margin-top: 6px;
+  font-weight: 900;
+  color:#1a1a1a;
+  font-size: 19px;
+}
+
+/* card settings for forms (review, login, sign in) */
+.form-card{
+  background:#ffffff;
+  border-radius: 14px;
+  border: 3px solid rgba(0,0,0,0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  padding: 22px;
+  max-width: 900px;
+}
+
+/* =========================================================
+   FORM FIELD LAYOUT
+   Used on add-review, login and register pages
+   ========================================================= */
+
+/* groups a label and input vertically with spacing */
+.field{
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* allows a field to span the full width in grid layouts */
+.field-full{
+  grid-column: 1 / -1;
+}
+
+/* label styling for form fields */
+.field label{
+  font-weight: 900;
+  color:#111;
+  font-size: 15px;
+}
+
+/* base styling for text, date, file inputs and textareas */
+.field input[type="text"],
+.field input[type="date"],
+.field input[type="file"],
+.field textarea{
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.15);
+  font-size: 15px;
+  outline:none;
+  background:#fafafa;
+}
+
+/* allows textarea to resize vertically only */
+.field textarea{
+  resize: vertical;
+}
+
+/* helper text shown under inputs (e.g. poster instructions) */
+.helptext{
+  margin: 0;
+  font-size: 13px;
+  color:#666;
+}
+
+/* =========================================================
+   STAR RATING (clickable)
+   Used when adding a review
+   ========================================================= */
+
+/* container for star rating inputs */
+.star-rating{
+  display:inline-flex;
+  flex-direction: row-reverse; /* keeps star 5 visually on the left */
+  justify-content:flex-end;
+  gap: 6px;
+}
+
+/* hides the radio input elements */
+.star-rating input{
+  display:none;
+}
+
+/* visual styling for star labels */
+.star-rating label{
+  font-size: 36px;
+  cursor:pointer;
+  color: rgba(0,0,0,0.2);
+  line-height: 1;
+  transition: transform 0.06s ease, filter 0.06s ease;
+}
+
+/* small lift effect when hovering over a star */
+.star-rating label:hover{
+  transform: translateY(-1px);
+}
+
+/* fills stars when hovered or selected */
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label{
+  color:#ffb000;
+  filter: drop-shadow(0 2px 0 rgba(0,0,0,0.18));
+}
+
+/* centers authentication cards on the page */
+.auth-page{
+  display:flex;
+  justify-content:center;
+  padding-top: 20px;
+}
+
+/* main container card for login/register */
+.auth-card{
+  width: 100%;
+  max-width: 520px;
+  background:#ffffff;
+  border-radius: 14px;
+  border: 3px solid rgba(0,0,0,0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  padding: 22px;
+}
+
+/* main heading on auth pages */
+.auth-title{
+  margin: 0;
+  font-size: 28px;
+  font-weight: 1000;
+  color:#111;
+}
+
+/* subtitle text under the heading */
+.auth-subtitle{
+  margin: 8px 0 18px;
+  color:#444;
+  font-weight: 600;
+}
+
+/* label styling inside auth forms */
+.auth-form label{
+  display:block;
+  margin-top: 12px;
+  font-weight: 900;
+  color:#111;
+  font-size: 15px;
+}
+
+/* input styling for username and password fields */
+.auth-form input[type="text"],
+.auth-form input[type="password"]{
+  width:100%;
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.15);
+  font-size: 15px;
+  outline:none;
+  background:#fafafa;
+  margin-top: 8px;
+}
+
+/* visual focus state for auth inputs */
+.auth-form input:focus{
+  border-color: rgba(32,195,106,0.7);
+  box-shadow: 0 0 0 4px rgba(32,195,106,0.15);
+}
+
+/* footer text under auth forms (e.g. login / sign up links) */
+.auth-footer{
+  margin-top: 14px;
+  font-weight: 700;
+  color:#444;
+}
+
+/* links inside auth footer */
+.auth-footer a{
+  color:#20c36a;
+  font-weight: 900;
+  text-decoration:none;
+}
+
+/* hover effect for auth footer links */
+.auth-footer a:hover{
+  text-decoration: underline;
+}
+
+/* alert box for errors (e.g. invalid login) */
+.alert{
+  background: #fff3cd;
+  border: 2px solid #ffe69c;
+  color:#7a5a00;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  margin: 10px 0 14px;
+}
+
+
+/* ===== Review dropdown ===== */
+
+.review-toggle{
+  margin-top: 6px;
+  background: none;
+  border: none;
+  font-weight: 900;
+  font-size: 13px;
+  color: #ffb000;
+  cursor: pointer;
+  padding: 0;
+}
+
+.review-toggle:hover{
+  text-decoration: underline;
+}
+
+.review-text{
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111;
+  background: #f6f6f6;
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  /* hidden by default */
+  display: none;
+}

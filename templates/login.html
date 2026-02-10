@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page auth-page">
+  <div class="auth-card">
+    <h2 class="auth-title">Welcome back</h2>
+    <p class="auth-subtitle">Log in to post reviews and upload posters.</p>
+
+    {% if error %}
+      <div class="alert">{{ error }}</div>
+    {% endif %}
+
+    <form action="/login" method="post" class="auth-form">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" required autocomplete="username" placeholder="e.g. adyan">
+
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required autocomplete="current-password" placeholder="••••••••">
+
+      <br><br>
+      <button type="submit" class="primary-btn">Login</button>
+    </form>
+
+    <p class="auth-footer">
+      Don’t have an account?
+      <a href="/register">Sign up</a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- blocks cross site scripting (xss) -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+
+    <title>ACY Movie Reviews</title>
+
+    <link rel="stylesheet" href="static/css/style.css" />
+    <link rel="manifest" href="static/manifest.json" />
+    <link rel="icon" href="/static/css/icons/images/favicon.png">
+
+</head>
+
+<script>
+  function toggleReview(button){
+    const review = button.nextElementSibling;
+  
+    if (review.style.display === "block") {
+      review.style.display = "none";
+      button.textContent = "▼ Read review";
+    } else {
+      review.style.display = "block";
+      button.textContent = "▲ Hide review";
+    }
+  }
+  </script>
+  
+
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="{{ url_for('static', filename='css/icons/images/favicon.png') }}" alt="Logo">
+          <span class="brand-name">ACY REVIEWS</span>
+        </div>
+      
+        <nav class="topnav">
+        
+          <a class="navbtn" href="/">
+            <img src="{{ url_for('static', filename='css/icons/ui/home.png') }}" class="nav-icon">
+            HOME
+          </a>
+        
+          {% if session.get('id') %}
+            <a class="navbtn navbtn-green" href="/add">
+              <img src="{{ url_for('static', filename='css/icons/ui/review.png') }}" class="nav-icon">
+              REVIEW
+            </a>
+        
+            <a class="navbtn" href="/logout">
+              <img src="{{ url_for('static', filename='css/icons/ui/logout.png') }}" class="nav-icon">
+              LOGOUT
+            </a>
+          {% else %}
+            <a class="navbtn" href="/login">
+              <img src="{{ url_for('static', filename='css/icons/ui/login.png') }}" class="nav-icon">
+              LOGIN
+            </a>
+        
+            <a class="navbtn" href="/register">
+              <img src="{{ url_for('static', filename='css/icons/ui/signup.png') }}" class="nav-icon">
+              SIGN UP
+            </a>
+          {% endif %}
+        </nav>
+        
+      </header>
+      
+
+    <!-- Page content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Service worker script -->
+    <script src="static/js/app.js"></script>
+
+    
+
+</body>
+</html>
