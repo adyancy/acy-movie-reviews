@@ -17,22 +17,3 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-// Review dropdown toggles
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".review-toggle").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const reviewText = btn.nextElementSibling; // should be .review-text
-      if (!reviewText) return;
-
-      const isOpen = getComputedStyle(reviewText).display !== "none";
-
-      if (isOpen) {
-        reviewText.style.display = "none";
-        btn.textContent = "▼ Read review";
-      } else {
-        reviewText.style.display = "block";
-        btn.textContent = "▲ Hide review";
-      }
-    });
-  });
-});

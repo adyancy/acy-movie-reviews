@@ -135,12 +135,68 @@ def AddReview(user_id, review_date, movie_title, rating, review_text, poster_fil
     return True
 
 def get_review_by_id(review_id):
-    conn = get_db_connection()
-    review = conn.execute(
-        "SELECT reviews.*, users.username FROM reviews "
-        "JOIN users ON reviews.user_id = users.id "
-        "WHERE reviews.id = ?",
-        (review_id,)
-    ).fetchone()
-    conn.close()
+    db = GetDB()
+    review = db.execute("""
+        SELECT
+            Reviews.id AS id,
+            Reviews.user_id AS user_id,
+            Reviews.review_date,
+            Reviews.movie_title,
+            Reviews.rating,
+            Reviews.review_text,
+            Reviews.poster_filename,
+            Users.username
+        FROM Reviews
+        JOIN Users ON Reviews.user_id = Users.id
+        WHERE Reviews.id = ?
+    """, (review_id,)).fetchone()
+    db.close()
     return review
+
+def get_reviews_filtered(sort="watched", min_rating=None, username=None):
+    dbconn = GetDB()
+
+    base = """
+        SELECT
+            Reviews.id AS id,
+            Reviews.user_id AS user_id,
+            Reviews.review_date,
+            Reviews.movie_title,
+            Reviews.rating,
+            Reviews.review_text,
+            Reviews.poster_filename,
+            Users.username
+        FROM Reviews
+        JOIN Users ON Reviews.user_id = Users.id
+    """
+
+    where = []
+    params = []
+
+    if min_rating is not None:
+        where.append("Reviews.rating >= ?")
+        params.append(min_rating)
+
+    if username:
+        where.append("Users.username = ?")
+        params.append(username)
+
+    if where:
+        base += " WHERE " + " AND ".join(where)
+
+    # Sorting
+    if sort == "newest":
+        # "Newest posted" = highest ID (since you don't have a created_at column)
+        base += " ORDER BY Reviews.id DESC"
+    elif sort == "watched":
+        base += " ORDER BY Reviews.review_date DESC, Reviews.id DESC"
+    elif sort == "rating_desc":
+        base += " ORDER BY Reviews.rating DESC, Reviews.id DESC"
+    elif sort == "rating_asc":
+        base += " ORDER BY Reviews.rating ASC, Reviews.id DESC"
+    else:
+        base += " ORDER BY Reviews.review_date DESC, Reviews.id DESC"
+
+    rows = dbconn.execute(base, tuple(params)).fetchall()
+    dbconn.close()
+    return rows

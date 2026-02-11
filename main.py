@@ -3,6 +3,9 @@ import db
 import os
 from werkzeug.utils import secure_filename
 
+
+
+
 app = Flask(__name__)
 app.secret_key = "gtg"
 
@@ -14,6 +17,32 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def allowed_file(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/")
+def index():
+    sort = request.args.get("sort", "watched")
+    min_rating = request.args.get("min_rating", "").strip()
+    user = request.args.get("user", "").strip()
+
+    min_rating_int = int(min_rating) if min_rating.isdigit() else None
+    user_val = user if user else None
+
+    reviews = db.get_reviews_filtered(sort=sort, min_rating=min_rating_int, username=user_val)
+
+    user_id = session.get("id")
+    reviews = [dict(r) for r in reviews]
+    for r in reviews:
+        r["can_edit"] = (user_id is not None and r["user_id"] == user_id)
+
+    return render_template(
+        "index.html",
+        reviews=reviews,
+        sort=sort,
+        min_rating=min_rating_int,
+        user=user
+    )
+
 
 
 @app.route("/")
@@ -190,12 +219,13 @@ def delete_review(review_id):
 
 @app.route("/review/<int:review_id>")
 def view_review(review_id):
-    review = get_review_by_id(review_id)
+    review = db.get_review_by_id(review_id)
 
     if not review:
         return "Review not found", 404
 
     return render_template("view.html", review=review)
+
 
 
 if __name__ == "__main__":

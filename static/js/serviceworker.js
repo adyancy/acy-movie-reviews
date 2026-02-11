@@ -1,5 +1,6 @@
+// static/js/serviceworker.js
+
 const assets = [
-  "/",
   "static/css/style.css",
   "static/js/app.js",
   "static/images/logo.png",
@@ -10,7 +11,8 @@ const assets = [
   "static/icons/icon-512x512.png",
 ];
 
-const CATALOGUE_ASSETS = "movie-review-assets-v1";
+// Bump this whenever you change cached assets
+const CATALOGUE_ASSETS = "movie-review-assets-v2";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -18,12 +20,35 @@ self.addEventListener("install", (event) => {
       return cache.addAll(assets);
     })
   );
+
+  // Activate updated SW ASAP
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  // Remove old caches
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== CATALOGUE_ASSETS)
+          .map((key) => caches.delete(key))
+      )
+    )
+  );
+
+  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
+  // Always go to network for page navigations (so filters/sorting work every time)
+  if (event.request.mode === "navigate") {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // For static assets: network first, fallback to cache if offline
   event.respondWith(
-    fetch(event.request).catch(() =>
-      caches.match(event.request)
-    )
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });

@@ -53,3 +53,28 @@
 
 -- ALTER TABLE Reviews ADD COLUMN poster_filename TEXT;
 
+-- ALTER TABLE Reviews ADD COLUMN poster_url TEXT;
+
+--SELECT Reviews.*, Users.username
+--FROM Reviews
+--JOIN Users ON Reviews.user_id = Users.id
+--ORDER BY Reviews.id DESC;
+
+--SELECT Reviews.*, Users.username
+--FROM Reviews
+--JOIN Users ON Reviews.user_id = Users.id
+--WHERE Reviews.rating >= 4
+--ORDER BY Reviews.id DESC;
+
+--SELECT Reviews.*, Users.username
+--FROM Reviews
+--JOIN Users ON Reviews.user_id = Users.id
+--WHERE Users.username = 'adyan'
+--ORDER BY Reviews.id DESC;
+
+--UPDATE Reviews
+--SET rating = 5, review_text = 'Updated review text'
+----WHERE id = 1 AND user_id = 2;
+
+--DELETE FROM Reviews
+--WHERE id = 1 AND user_id = 2;

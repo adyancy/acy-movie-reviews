@@ -579,3 +579,84 @@ main {
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
+.poster-card {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.poster-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.owner-actions {
+  position: relative;
+  z-index: 2;
+}
+
+.poster-img-large {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.review-layout{
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.review-left{
+  position: sticky;
+  top: 90px; /* keeps poster visible while scrolling review */
+  align-self: start;
+}
+
+.poster-frame-large{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.poster-img-large{
+  width: 100%;
+  max-width: 360px;   /* cap size */
+  height: auto;
+  border-radius: 12px;
+  display: block;
+}
+
+.movie-title-large{
+  margin-top: 0;
+}
+
+.review-full-text{
+  color:#ffffff;
+  margin-top: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap; /* keeps line breaks */
+  font-size: 20px;
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 900px){
+  .review-layout{
+    grid-template-columns: 1fr;
+  }
+  .review-left{
+    position: relative;
+    top: auto;
+  }
+  .poster-img-large{
+    max-width: 420px;
+  }
+}
