@@ -4,14 +4,19 @@
 <div class="page">
 
   {% if session.get('id') %}
-    <h2 class="page-title">Welcome back <span class="muted">[{{ session.get('username') }}]</span>, browse recent movie reviews below.</h2>
+    <h2 class="page-title">
+      Welcome back <span class="muted">[{{ session.get('username') }}]</span>, browse recent movie reviews below.
+    </h2>
   {% else %}
-    <h2 class="page-title">Welcome, browse recent movie reviews below. <span class="muted">Log in to review.</span></h2>
+    <h2 class="page-title">
+      Welcome, browse recent movie reviews below. <span class="muted">Log in to review.</span>
+    </h2>
   {% endif %}
 
   <section class="poster-grid">
     {% for review in reviews %}
       <article class="poster-card">
+
         <div class="poster-frame">
           {% if review['poster_filename'] %}
             <img class="poster-img"
@@ -30,7 +35,7 @@
         </div>
 
         <div class="stars-row" aria-label="Rating: {{ review['rating'] }} out of 5">
-          {% for i in range(1,6) %}
+          {% for i in range(1, 6) %}
             {% if i <= review['rating'] %}
               <span class="star filled">★</span>
             {% else %}
@@ -39,25 +44,27 @@
           {% endfor %}
         </div>
 
-
         <div class="movie-name">{{ review['movie_title'] }}</div>
 
-        <button type="button" class="review-toggle">
-          ▼ Read review
-        </button>
-        
-        <div class="review-text">
-          {{ review['review_text'] }}
-        </div>
-        
-      
+        <button type="button" class="review-toggle">▼ Read review</button>
+        <div class="review-text">{{ review['review_text'] }}</div>
 
+        {% if review['can_edit'] %}
+          <div class="owner-actions">
+            <a class="navbtn" href="{{ url_for('edit_review', review_id=review['id']) }}">Edit</a>
+
+            <form method="POST"
+                  action="{{ url_for('delete_review', review_id=review['id']) }}"
+                  style="display:inline;">
+              <button type="submit" class="navbtn navbtn-red">Delete</button>
+            </form>
+          </div>
+        {% endif %}
 
       </article>
     {% endfor %}
   </section>
 
-  
 </div>
 
 {% endblock %}

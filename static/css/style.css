@@ -464,3 +464,87 @@ main{
   color: #888;
   border-top: 1px solid #575757;
 }
+
+/* --- Edit form layout --- */
+.edit-form {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.edit-form label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: 700;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="date"],
+.edit-form input[type="number"],
+.edit-form textarea,
+.edit-form input[type="file"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.edit-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* Buttons just for forms (smaller than nav buttons) */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  width: auto;      /* important */
+}
+
+.btn-primary {
+  background: #ffb300;   /* same vibe as your yellow */
+  color: #3b2a00;
+}
+
+.btn-secondary {
+  background: #444;
+  color: #fff;
+}
+
+.owner-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.owner-actions .navbtn,
+.owner-actions .navbtn-red {
+  padding: 8px 12px;
+  font-size: 14px;
+  width: auto;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;            /* this pushes the footer down */
+}
