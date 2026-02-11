@@ -7,7 +7,7 @@ if ("serviceWorker" in navigator) {
     });
   }
   
-  // Service Worker
+// Service Worker (keep if you want)
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker
@@ -21,30 +21,18 @@ if ("serviceWorker" in navigator) {
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".review-toggle").forEach((btn) => {
     btn.addEventListener("click", () => {
-      // Find the review text inside the same poster card (more reliable than nextElementSibling)
-      const card = btn.closest(".poster-card");
-      if (!card) return;
+      const reviewText = btn.nextElementSibling; // should be .review-text
+      if (!reviewText) return;
 
-      const review = card.querySelector(".review-text");
-      if (!review) return;
-
-      const isOpen = review.style.display === "block";
+      const isOpen = getComputedStyle(reviewText).display !== "none";
 
       if (isOpen) {
-        review.style.display = "none";
+        reviewText.style.display = "none";
         btn.textContent = "▼ Read review";
       } else {
-        review.style.display = "block";
+        reviewText.style.display = "block";
         btn.textContent = "▲ Hide review";
       }
-    });
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("form[data-confirm]").forEach((form) => {
-    form.addEventListener("submit", (e) => {
-      if (!confirm(form.getAttribute("data-confirm"))) e.preventDefault();
     });
   });
 });

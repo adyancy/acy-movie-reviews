@@ -134,3 +134,13 @@ def AddReview(user_id, review_date, movie_title, rating, review_text, poster_fil
     db.close()
     return True
 
+def get_review_by_id(review_id):
+    conn = get_db_connection()
+    review = conn.execute(
+        "SELECT reviews.*, users.username FROM reviews "
+        "JOIN users ON reviews.user_id = users.id "
+        "WHERE reviews.id = ?",
+        (review_id,)
+    ).fetchone()
+    conn.close()
+    return review

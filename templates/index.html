@@ -15,7 +15,11 @@
 
   <section class="poster-grid">
     {% for review in reviews %}
-      <article class="poster-card">
+
+      <!-- CLICKABLE CARD -->
+      <article class="poster-card"
+               onclick="window.location='{{ url_for('view_review', review_id=review['id']) }}'"
+               style="cursor:pointer;">
 
         <div class="poster-frame">
           {% if review['poster_filename'] %}
@@ -46,22 +50,28 @@
 
         <div class="movie-name">{{ review['movie_title'] }}</div>
 
-        <button type="button" class="review-toggle">▼ Read review</button>
-        <div class="review-text">{{ review['review_text'] }}</div>
-
         {% if review['can_edit'] %}
-          <div class="owner-actions">
-            <a class="navbtn" href="{{ url_for('edit_review', review_id=review['id']) }}">Edit</a>
+          <div class="owner-actions" onclick="event.stopPropagation();">
+            
+            <a class="navbtn"
+               href="{{ url_for('edit_review', review_id=review['id']) }}">
+              Edit
+            </a>
 
             <form method="POST"
                   action="{{ url_for('delete_review', review_id=review['id']) }}"
-                  style="display:inline;">
-              <button type="submit" class="navbtn navbtn-red">Delete</button>
+                  style="display:inline;"
+                  onclick="event.stopPropagation();">
+              <button type="submit" class="navbtn navbtn-red">
+                Delete
+              </button>
             </form>
+
           </div>
         {% endif %}
 
       </article>
+
     {% endfor %}
   </section>
 

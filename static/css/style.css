@@ -512,16 +512,6 @@ main{
   width: auto;      /* important */
 }
 
-.btn-primary {
-  background: #ffb300;   /* same vibe as your yellow */
-  color: #3b2a00;
-}
-
-.btn-secondary {
-  background: #444;
-  color: #fff;
-}
-
 .owner-actions {
   display: flex;
   gap: 10px;
@@ -548,3 +538,44 @@ body {
 main {
   flex: 1;            /* this pushes the footer down */
 }
+
+.form-actions{
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  align-items: center;
+}
+
+.secondary-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  background: #444;
+  color: #fff;
+}
+
+.primary-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  background: #ffb300;
+  color: #3b2a00;
+}
+
+.poster-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.poster-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+

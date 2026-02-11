@@ -188,5 +188,15 @@ def delete_review(review_id):
     return redirect("/")
 
 
+@app.route("/review/<int:review_id>")
+def view_review(review_id):
+    review = get_review_by_id(review_id)
+
+    if not review:
+        return "Review not found", 404
+
+    return render_template("view.html", review=review)
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

@@ -4,31 +4,67 @@
 <div class="page">
   <h2 class="page-title">Edit Review</h2>
 
-  {% if error %}
-    <p class="error">{{ error }}</p>
-  {% endif %}
+  <form method="post" enctype="multipart/form-data" class="form-card">
 
-  <form method="POST" enctype="multipart/form-data" class="form">
-    <label>Date</label>
-    <input type="date" name="review_date" value="{{ review['review_date'] }}" required>
+    <div class="form-grid">
 
-    <label>Movie title</label>
-    <input type="text" name="movie_title" value="{{ review['movie_title'] }}" required>
+      <div class="field">
+        <label for="review_date">Watched date</label>
+        <input type="date" name="review_date" id="review_date"
+               value="{{ review['review_date'] }}" required>
+      </div>
 
-    <label>Rating (1–5)</label>
-    <input type="number" name="rating" min="1" max="5" value="{{ review['rating'] }}" required>
+      <div class="field">
+        <label for="movie_title">Movie title</label>
+        <input type="text" name="movie_title" id="movie_title"
+               value="{{ review['movie_title'] }}" required placeholder="e.g. Blade Runner">
+      </div>
 
-    <label>Review text</label>
-    <textarea name="review_text" rows="6" required>{{ review['review_text'] }}</textarea>
+      <div class="field field-full">
+        <label>Rating</label>
 
-    <label>Replace poster (optional)</label>
-    <input type="file" name="poster" accept=".png,.jpg,.jpeg,.webp">
+        <!-- 5-star rating (max5) -->
+        <div class="star-rating">
+          <input type="radio" id="estar5" name="rating" value="5" required
+                 {% if review['rating'] == 5 %}checked{% endif %}>
+          <label for="estar5" title="5 stars">★</label>
+
+          <input type="radio" id="estar4" name="rating" value="4"
+                 {% if review['rating'] == 4 %}checked{% endif %}>
+          <label for="estar4" title="4 stars">★</label>
+
+          <input type="radio" id="estar3" name="rating" value="3"
+                 {% if review['rating'] == 3 %}checked{% endif %}>
+          <label for="estar3" title="3 stars">★</label>
+
+          <input type="radio" id="estar2" name="rating" value="2"
+                 {% if review['rating'] == 2 %}checked{% endif %}>
+          <label for="estar2" title="2 stars">★</label>
+
+          <input type="radio" id="estar1" name="rating" value="1"
+                 {% if review['rating'] == 1 %}checked{% endif %}>
+          <label for="estar1" title="1 star">★</label>
+        </div>
+      </div>
+
+      <div class="field field-full">
+        <label for="review_text">Review</label>
+        <textarea name="review_text" id="review_text" rows="7" required>{{ review['review_text'] }}</textarea>
+      </div>
+
+      <div class="field field-full">
+        <label for="poster">Replace poster (optional)</label>
+        <input type="file" name="poster" id="poster" accept="image/*">
+        <p class="helptext">Leave blank to keep your current poster.</p>
+      </div>
+
+    </div>
 
     <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Save changes</button>
-      <a class="btn btn-secondary" href="/">Cancel</a>
+      <button type="submit" class="primary-btn">Save changes</button>
+      <a href="/" class="secondary-btn">Cancel</a>
     </div>
-    
+
   </form>
 </div>
 
