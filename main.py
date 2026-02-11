@@ -4,6 +4,8 @@ import db
 import os
 from werkzeug.utils import secure_filename
 
+from flask import abort
+
 
 app = Flask(__name__)
 app.secret_key = "gtg"
@@ -87,6 +89,60 @@ def Add():
         return redirect("/")
 
     return render_template("add.html")
+
+@app.route("/review/<int:review_id>/edit", methods=["GET", "POST"])
+def edit_review(review_id):
+    if not session.get("id"):
+        abort(403)
+
+    conn = db.GetDB()
+    review = conn.execute("""
+        SELECT * FROM Reviews
+        WHERE id = ? AND user_id = ?
+    """, (review_id, session["id"])).fetchone()
+
+    if review is None:
+        conn.close()
+        abort(403)
+
+    if request.method == "POST":
+        conn.execute("""
+            UPDATE Reviews
+            SET movie_title = ?, rating = ?, review_text = ?
+            WHERE id = ? AND user_id = ?
+        """, (
+            request.form["movie_title"],
+            request.form["rating"],
+            request.form["review_text"],
+            review_id,
+            session["id"]
+        ))
+        conn.commit()
+        conn.close()
+        return redirect("/")
+
+    conn.close()
+    return render_template("edit.html", review=review)
+
+
+@app.route("/review/<int:review_id>/delete", methods=["POST"])
+def delete_review(review_id):
+    if not session.get("id"):
+        abort(403)
+
+    conn = db.GetDB()
+    conn.execute("""
+        DELETE FROM Reviews
+        WHERE id = ? AND user_id = ?
+    """, (review_id, session["id"]))
+    conn.commit()
+
+    if conn.total_changes == 0:
+        conn.close()
+        abort(403)
+
+    conn.close()
+    return redirect("/")
 
 
 

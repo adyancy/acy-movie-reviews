@@ -11,11 +11,12 @@ def GetDB():
 
 
 def GetAllReviews():
-    # Connect, query all reviews and then return the data
     db = GetDB()
 
     reviews = db.execute("""
-        SELECT Reviews.review_date,
+        SELECT Reviews.id   AS review_id,
+               Reviews.user_id,
+               Reviews.review_date,
                Reviews.movie_title,
                Reviews.rating,
                Reviews.review_text,
@@ -29,7 +30,59 @@ def GetAllReviews():
     db.close()
     return reviews
 
+def GetReviewById(review_id):
+    db = GetDB()
+    review = db.execute("""
+        SELECT * FROM Reviews WHERE id = ?
+    """, (review_id,)).fetchone()
+    db.close()
+    return review
 
+
+def UpdateReview(review_id, user_id, review_date, movie_title, rating, review_text, poster_filename=None):
+    # Only update if it belongs to the user_id
+    db = GetDB()
+
+    try:
+        rating = int(rating)
+    except:
+        return False
+    if rating < 1 or rating > 5:
+        return False
+
+    if poster_filename:
+        db.execute("""
+            UPDATE Reviews
+               SET review_date=?,
+                   movie_title=?,
+                   rating=?,
+                   review_text=?,
+                   poster_filename=?
+             WHERE id=? AND user_id=?
+        """, (review_date, movie_title.strip(), rating, review_text.strip(), poster_filename, review_id, user_id))
+    else:
+        db.execute("""
+            UPDATE Reviews
+               SET review_date=?,
+                   movie_title=?,
+                   rating=?,
+                   review_text=?
+             WHERE id=? AND user_id=?
+        """, (review_date, movie_title.strip(), rating, review_text.strip(), review_id, user_id))
+
+    db.commit()
+    rows = db.total_changes
+    db.close()
+    return rows > 0
+
+
+def DeleteReview(review_id, user_id):
+    db = GetDB()
+    db.execute("DELETE FROM Reviews WHERE id=? AND user_id=?", (review_id, user_id))
+    db.commit()
+    rows = db.total_changes
+    db.close()
+    return rows > 0
 
 def CheckLogin(username, password):
     db = GetDB()
