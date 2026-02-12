@@ -53,8 +53,7 @@ def Home():
     We fetch what the template needs (id + user_id) and also compute can_edit safely.
     """
     conn = db.GetDB()
-    rows = conn.execute("""
-        SELECT
+    rows = conn.execute("""SELECT
             Reviews.id AS id,
             Reviews.user_id AS user_id,
             Reviews.review_date,
