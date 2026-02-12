@@ -6,14 +6,3 @@ if ("serviceWorker" in navigator) {
         .catch((err) => console.log("service worker not registered", err));
     });
   }
-  
-// Service Worker (keep if you want)
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker
-      .register("/static/js/serviceworker.js")
-      .then(() => console.log("service worker registered"))
-      .catch((err) => console.log("service worker not registered", err));
-  });
-}
-
