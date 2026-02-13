@@ -2,7 +2,6 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 def GetDB():
     # Connect to the database and return the connection object
     db = sqlite3.connect(".database/gtg.db")
